@@ -40,5 +40,26 @@ namespace WpfClient.Operations
                 return null;
             }
         }
+
+        public User GetUserDetails(User user)
+        {
+            string endpoint = this.baseUrl + "/users/" + user.Id;
+            string access_token = user.access_token;
+
+            WebClient wc = new WebClient();
+            wc.Headers["Content-Type"] = "application/json";
+            wc.Headers["Authorization"] = access_token;
+            try
+            {
+                string response = wc.DownloadString(endpoint);
+                user = JsonConvert.DeserializeObject<User>(response);
+                user.access_token = access_token;
+                return user;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

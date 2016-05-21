@@ -19,31 +19,36 @@ using WpfClient.Operations;
 namespace WpfClient.Pages
 {
     /// <summary>
-    /// Interaction logic for LoginPage.xaml
+    /// Interaction logic for DetailsPage.xaml
     /// </summary>
-    public partial class LoginPage : Page
+    public partial class DetailsPage : Page
     {
-        public LoginPage()
+        public DetailsPage()
         {
             InitializeComponent();
+            FetchUserDetails();
+            ShowUserInfo();
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private void FetchUserDetails()
         {
-            string username = tbxUsername.Text;
-            string password = pbxPassword.Password;
-
             ApiOperations ops = new ApiOperations();
-            User user = ops.AuthenticateUser(username, password);
+            User user = ops.GetUserDetails(Globals.LoggedInUser);
             if (user == null)
             {
-                MessageBox.Show("Invalid username or password");
-                return;
+                MessageBox.Show("Session expired");
             }
 
             Globals.LoggedInUser = user;
-            MessageBox.Show("Login successful");
-            NavigationService.Navigate(new DetailsPage());
+        }
+
+        private void ShowUserInfo()
+        {
+            tbkWelcome.Text += " " + Globals.LoggedInUser.Username;
+            tbkFname.Text = Globals.LoggedInUser.Firstname;
+            tbkMname.Text = Globals.LoggedInUser.Middlename;
+            tbkLname.Text = Globals.LoggedInUser.Lastname;
+            tbkAge.Text = Globals.LoggedInUser.Age.ToString();
         }
     }
 }
