@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 
 using Api.Models;
+using Api.Auth;
 
 namespace Api.Controllers
 {
@@ -17,10 +18,54 @@ namespace Api.Controllers
             _db = new ApiDbContext();
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
         {
-            return new ObjectResult(_db.Users);
+            string token = this.Request.Headers["Authorization"];
+            if (token == null)
+                return HttpBadRequest(new { error = "No authorization header" });
+
+            bool isValid = JWTAuth.ValidateToken(token, id);
+            if (!isValid)
+            {
+                this.Response.StatusCode = 403;
+                return new ObjectResult(new { error = "Invalid access token" });
+            }
+
+            User user = _db.Users.FirstOrDefault(u => u.Id == id);
+            return new ObjectResult(new
+            {
+                user.Id,
+                user.Username,
+                user.Firstname,
+                user.Middlename,
+                user.Lastname,
+                user.Age
+            });
+        }
+
+        [HttpPost("login")]
+        public IActionResult Login([FromBody]User user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return HttpBadRequest(ModelState);
+            }
+
+            User _user = _db.Users.FirstOrDefault(
+                u => u.Username == user.Username &&
+                u.Password == user.Password);
+
+            if (_user == null)
+                return new HttpUnauthorizedResult();
+
+            string accessToken = JWTAuth.GenerateToken(_user);
+            return new ObjectResult(new
+            {
+                _user.Id,
+                _user.Username,
+                access_token = accessToken
+            });
         }
 
         [HttpPost]
@@ -46,7 +91,17 @@ namespace Api.Controllers
             _db.Users.Add(user);
             _db.SaveChanges();
 
-            return new ObjectResult(_db.Users);
+            string accessToken = JWTAuth.GenerateToken(user);
+            return new ObjectResult(new
+            {
+                user.Id,
+                user.Username,
+                user.Firstname,
+                user.Middlename,
+                user.Lastname,
+                user.Age,
+                access_token = accessToken
+            });
         }
     }
 }
