@@ -10,7 +10,8 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="300">
-            <TextBlock Text="Username:" />
+            <TextBlock Text="Welcome to Auth0" HorizontalAlignment="Center" FontSize="36" />
+            <TextBlock Text="Username:" Margin="0,5,0,0" />
             <TextBox x:Name="tbxUsername" Padding="5" />
             <TextBlock Text="Password:" Margin="0,5,0,0" />
             <PasswordBox x:Name="pbxPassword" Padding="5" />
