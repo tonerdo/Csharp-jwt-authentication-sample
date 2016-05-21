@@ -5,8 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="WPF Client" Height="350" Width="525">
+    <Frame x:Name="frame" Content="Frame" Margin="0" Source="/WpfClient;component/Pages/Login.xaml" NavigationUIVisibility="Hidden"/>
 </Window>
