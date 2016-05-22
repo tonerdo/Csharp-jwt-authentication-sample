@@ -96,7 +96,7 @@ The JWT must be sent on the `Authorization` header as follows: `Authorization: <
 ## Running it
 
 Just clone the repository, and launch the solution in Visual Studio. That's it :).
-This project was build using Visual Studio 2015
+This project was build using Visual Studio 2015.
 
 ## Issue Reporting
 
