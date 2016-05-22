@@ -26,6 +26,10 @@ namespace WpfClient.Pages
         public DetailsPage()
         {
             InitializeComponent();
+        }
+
+        private void detailsPage_Loaded(object sender, RoutedEventArgs e)
+        {
             FetchUserDetails();
             ShowUserInfo();
         }
@@ -37,6 +41,8 @@ namespace WpfClient.Pages
             if (user == null)
             {
                 MessageBox.Show("Session expired");
+                // Navigate back to login page
+                NavigationService.Navigate(new LoginPage());
             }
 
             Globals.LoggedInUser = user;
@@ -49,6 +55,12 @@ namespace WpfClient.Pages
             tbkMname.Text = Globals.LoggedInUser.Middlename;
             tbkLname.Text = Globals.LoggedInUser.Lastname;
             tbkAge.Text = Globals.LoggedInUser.Age.ToString();
+        }
+
+        private void btnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            Globals.LoggedInUser = null;
+            NavigationService.Navigate(new LoginPage());
         }
     }
 }

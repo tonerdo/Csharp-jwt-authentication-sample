@@ -1,4 +1,4 @@
-﻿<Page x:Class="WpfClient.Pages.DetailsPage"
+﻿<Page x:Name="detailsPage" x:Class="WpfClient.Pages.DetailsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:WpfClient.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="455" d:DesignWidth="640"
-      Title="DetailsPage">
+      Title="DetailsPage" Loaded="detailsPage_Loaded">
 
     <Grid>
         <StackPanel Margin="0" VerticalAlignment="Center">
@@ -33,6 +33,7 @@
                 <TextBlock x:Name="tbkLname" Text="Lastname" Grid.Row="2" Grid.Column="1" />
                 <TextBlock x:Name="tbkAge" Text="Age" Grid.Row="3" Grid.Column="1" />
             </Grid>
+            <Button x:Name="btnLogout" Content="Logout" Width="100" Click="btnLogout_Click" Margin="0,10,0,0" />
         </StackPanel>
     </Grid>
 </Page>
