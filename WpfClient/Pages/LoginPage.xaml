@@ -16,6 +16,7 @@
             <TextBlock Text="Password:" Margin="0,5,0,0" />
             <PasswordBox x:Name="pbxPassword" Padding="5" />
             <Button x:Name="btnLogin" Content="LOGIN" Padding="5" Margin="0,5,0,0" Click="btnLogin_Click" />
+            <Button x:Name="btnRegister" Content="REGISTER" Padding="5" Margin="0,5,0,0" Click="btnRegister_Click" />
         </StackPanel>
     </Grid>
 </Page>

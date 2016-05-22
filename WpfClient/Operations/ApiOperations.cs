@@ -61,5 +61,33 @@ namespace WpfClient.Operations
                 return null;
             }
         }
+
+        public User RegisterUser(string username, string password, string firstname, 
+            string lastname, string middlename, int age)
+        {
+            string endpoint = this.baseUrl + "/users";
+            string method = "POST";
+            string json = JsonConvert.SerializeObject(new
+            {
+                username = username,
+                password = password,
+                firstname = firstname,
+                lastname = lastname,
+                middlename = middlename,
+                age = age
+            });
+
+            WebClient wc = new WebClient();
+            wc.Headers["Content-Type"] = "application/json";
+            try
+            {
+                string response = wc.UploadString(endpoint, method, json);
+                return JsonConvert.DeserializeObject<User>(response);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

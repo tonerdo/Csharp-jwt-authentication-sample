@@ -19,36 +19,40 @@ using WpfClient.Operations;
 namespace WpfClient.Pages
 {
     /// <summary>
-    /// Interaction logic for LoginPage.xaml
+    /// Interaction logic for RegistrationPage.xaml
     /// </summary>
-    public partial class LoginPage : Page
+    public partial class RegistrationPage : Page
     {
-        public LoginPage()
+        public RegistrationPage()
         {
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private void btnReg_Click(object sender, RoutedEventArgs e)
         {
             string username = tbxUsername.Text;
             string password = pbxPassword.Password;
+            string firstname = tbxFirstname.Text;
+            string lastname = tbxLastname.Text;
+            string middlename = tbxMiddlename.Text;
+            int age = int.Parse(tbxAge.Text);
 
             ApiOperations ops = new ApiOperations();
-            User user = ops.AuthenticateUser(username, password);
+            User user = ops.RegisterUser(username, password, firstname, lastname, middlename, age);
             if (user == null)
             {
-                MessageBox.Show("Invalid username or password");
+                MessageBox.Show("Username already exists");
                 return;
             }
 
             Globals.LoggedInUser = user;
-            MessageBox.Show("Login successful");
+            MessageBox.Show("Registration successful");
             NavigationService.Navigate(new DetailsPage());
         }
 
-        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new RegistrationPage());
+            NavigationService.GoBack();
         }
     }
 }
