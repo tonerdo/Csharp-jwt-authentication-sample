@@ -96,10 +96,6 @@ namespace Api.Controllers
             {
                 user.Id,
                 user.Username,
-                user.Firstname,
-                user.Middlename,
-                user.Lastname,
-                user.Age,
                 access_token = accessToken
             });
         }
